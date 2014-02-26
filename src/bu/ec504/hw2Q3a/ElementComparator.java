@@ -1,4 +1,4 @@
-package hw2Q3a.ec504.bu;
+package bu.ec504.hw2Q3a;
 
 import java.util.Comparator;
 
