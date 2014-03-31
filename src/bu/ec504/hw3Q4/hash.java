@@ -78,6 +78,8 @@ class hash {
 
 	public static void main(String[] args) {
 		System.out.println(compact("5678"));
+		System.out.println(compact("123456"));
+		
 		System.out.println(plain2("rx6|f.0 l8.hjt<:"));
 		System.out.println(plain2("4$x\".,xd\" <\"j 0j")); 
 		System.out.println(plain2(":&x`>``0$lln$:8<"));

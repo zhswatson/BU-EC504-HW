@@ -18,28 +18,32 @@ public class MyBST extends BST{
        
     public static ArrayList<Rotation> transform(BST first, BST second) {
         ArrayList<Rotation> LOR = new ArrayList<Rotation>();
-        System.out.println("first key is " + first.key + " second key is " + second.key);
+        //System.out.println("first key is " + first.key + " second key is " + second.key);
         if (first.key.intValue() == second.key.intValue()) {
             if(first.left != null) {
-                System.out.println("go to left of " +  first.key + " -- " + first.left.key);
+                //System.out.println("go to left of " +  first.key + " -- " + first.left.key);
                 LOR.addAll(transform(first.left, second.left));
             }
-            else
-              System.out.println(first.key + "'s left is null");
+            else {
+            	//System.out.println(first.key + "'s left is null");
+            }
             if(first.right != null) {
-                System.out.println("go to right of " + first.key + " -- " + first.right.key);
+                //System.out.println("go to right of " + first.key + " -- " + first.right.key);
                 LOR.addAll(transform(first.right, second.right));
             }
-            else
-               System.out.println(first.key + "'s right is null");
+            else {
+                //System.out.println(first.key + "'s right is null");
+            }
             
             return LOR;
         }
        
         else {
-        	System.out.println("before upkey, key is " + first.key + " " + second.key );
+        	//System.out.println("before upkey, key is " + first.key + " " + second.key );
+        	// do an upKey operation if a mismatch is encountered
         	LOR.addAll(upKey(first, second.key));
-        	System.out.println("upkey success, key is " + first.key + " " + second.key );
+        	//System.out.println("upkey success, key is " + first.key + " " + second.key );
+        	// do transform again at the current location
             LOR.addAll(transform(first,second));
         }
         return LOR;
@@ -63,10 +67,6 @@ public class MyBST extends BST{
             LOR.add(ROT);
         }
         else {
-//            if(tree.left != null) System.out.println(tree.key + "'s left is " + tree.left.key);
-//            else System.out.println("Left is null");
-//            if(tree.right != null) System.out.println(tree.key + "'s right is " + tree.right.key);
-//            else System.out.println("Right is null");
             LOR.addAll(upKey(tree.right, num));
             BST A = tree.left; BST B = tree.right.left; BST C = tree.right.right;
             Integer oldkey = tree.key; Integer newkey = tree.right.key;
@@ -97,18 +97,15 @@ public class MyBST extends BST{
 //        Integer[] nums2 = {6,5,4,3,2,1};
         BST tree1 = new BST(nums1);
         BST tree2 = new BST(nums2);
-        //ArrayList<Rotation> LOR = upKey(tree1.right, (Integer)13);
-//        System.out.println(tree1.right.key);
-//        System.out.print(tree1.print());
-//        System.out.print(tree2.print());       
-
 
         ArrayList<Rotation> LOR = transform(tree1, tree2);
-        PrintStream outDecode_file = new PrintStream(new FileOutputStream("r.txt"));
-        for( int i = 0; i < LOR.size(); i++) { outDecode_file.println(LOR.get(i).print()); }
+        PrintStream outDecode_file = new PrintStream(new FileOutputStream("problem2submission.txt"));
+        for( int i = 0; i < LOR.size(); i++) { 
+        	outDecode_file.println(LOR.get(i).print()); 
+        }
     	
         System.out.println("The length of LOR is ....." + LOR.size());
-        System.out.println("finished");
+        System.out.println("Finished");
        
     }
 }

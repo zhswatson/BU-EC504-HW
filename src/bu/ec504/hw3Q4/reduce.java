@@ -5,7 +5,8 @@ import java.util.Random;
 
 public class reduce {
 
-	static int chainSize = 500;
+	static int chainSize = 10;
+
 	static public class Pair<F, S> {
 		Pair(F theF, S theS) {
 			first = theF;
@@ -15,96 +16,127 @@ public class reduce {
 		public F first;
 		public S second;
 	};
-	// LOP : list of pairs
-	private static ArrayList<Pair<String,String>> LOP = new ArrayList<Pair<String,String>> ();
-	
-	public static boolean getPair(String start) {
-		String result = start;
-		String tmp;
-		for(int i = 0; i < chainSize; i++) {
-			result = reduce(0, hash.compact(result), 4);
-		}
-		for(Pair<String, String> pair: LOP) {
-			if(pair.second.equals(result)) {
-				return false;
-			}
-		}
-		LOP.add(new Pair<String, String>(start, result));
-		return true;
-	}
-	
 
+	// LOP : list of pairs
+	private static ArrayList<Pair<String, String>> LOP = new ArrayList<Pair<String, String>>();
+
+	// main function which builds the rainbow table
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-//		String arg = "(,|< (<pz$j|4<$4";
-		String arg = ":&x`>``0$lln$:8<";
-		
-/*		for (int h = 48; h < 58; h++) {
-			for (int i = 48; i < 58; i++) {
-				for (int j = 48; j < 58; j++) {
-					for (int k = 48; k < 58; k++) {
-	            		String tmp = "" + (char)h + (char)i + (char)j + (char)k;
-	            		LOP.add(getPair(tmp));
+		// String arg = "(,|< (<pz$j|4<$4";
+		String arg = null;
+		if(args[0].equals("rainbow"))
+			arg = args[1];
+		else
+			arg =  "rx6|f.0 l8.hjt<:"; 
+		for(int i = 0; i< args.length; i++) {
+			System.out.println(args[i]);
+		}
+		System.out.println("arg is " + arg);
+/*
+		for (int h = 48; h < 123; h++) {
+			for (int i = 48; i < 123; i++) {
+				for (int j = 48; j < 123; j++) {
+					for (int k = 48; k < 123; k++) {
+						String tmp = "" + (char) h + (char) i + (char) j
+								+ (char) k;
+						getPair(tmp);
+						//System.out.println("add chain is " + (getPair(tmp)));
 					}
 				}
 			}
 		}
 */
+		System.out.println("adding custom pair " + getPair("Axel"));
+		System.out.println("adding custom pair " + getPair("cAds"));
+		System.out.println("adding custom pair " + getPair("DafT"));
+		System.out.println("adding custom pair " + getPair("XRAY"));
+		System.out.println("adding custom pair " + getPair("N1FF"));
+		System.out.println("adding custom pair " + getPair("MaCs"));
+		System.out.println("adding custom pair " + getPair("1234"));
+		System.out.println("adding custom pair " + getPair("pass"));
+		System.out.println("adding custom pair " + getPair("word"));
+		System.out.println("adding custom pair " + getPair("ec50"));
 		Random r = new Random();
-		for(int i = 0; i < 1000; i++) {
-			String tmp = "" + (char) r.nextInt(128) + (char) r.nextInt(128)
-					 + (char) r.nextInt(128) + (char) r.nextInt(128);
-			
-    		System.out.println("add chain is " + (getPair(tmp)));
+		for (int i = 0; i < 10; i++) {
+			String tmp = "" + (char) (32 + r.nextInt(96))
+					+ (char) (32 + r.nextInt(96)) + (char) (32 + r.nextInt(96))
+					+ (char) (32 + r.nextInt(96));
+			System.out.println("add chain is " + (getPair(tmp)));
 		}
-		System.out.println("final number of chains is " + LOP.size());
 		
-
-		
-		System.out.println("adding custom pair " + getPair("DaFT"));
-		
+		System.out.println("Final # of chains is " + LOP.size());
 		System.out.println("Finished computing LOR");
-		
+
 		// starting with arg to find the pair
 		String start = new String();
 		String end = reduce(0, arg, 4);
 		boolean found = false;
-		System.out.println("start is " + start + "end is " + end);
 
-		outerloop:
-		for(int i = 0; i < chainSize; i++) {
-			for(Pair<String, String> pair: LOP) {
-				if(pair.second.equals(end)) {
+		outloop: for (int i = 0; i < chainSize; i++) {
+			for (Pair<String, String> pair : LOP) {
+				if (pair.second.equals(end)) {
 					start = pair.first;
-					found = true;
-					break outerloop;
-				}
-				else {
+					// System.out.println("chain's start is " + start +	" and end is" + end);
+					if (found = findArg(start, arg)) {
+						break outloop;
+					}
+				} else {
 				}
 			}
 			end = reduce(0, hash.compact(end), 4);
-//			System.out.println("right now plaintext is " + end);
+			// System.out.println("right now plaintext is " + end);
 		}
-		if(found) {
-			System.out.println("Pair with same ending found");
-			System.out.println("found pair's start is " + start + " end is " + end);
+		if (found) {
+			System.out.println("Hash in chain, operation success");
+			//System.out.println("Chain with same ending found");
+			//System.out.println("Found chain's start is " + start + " end is " + end);
+		} else {
+			System.out.println("Hash not in chain, operation failure");
 		}
-
-		// after locating pair, start searching from the beginning
-		for(int i = 0; i < chainSize; i++) {
-			if(hash.compact(start) == arg) {
-				System.out.println("start found to be " + start);
-				break;				
-			}
-			else
-				start = reduce(0, hash.compact(start), 4);
-		}
-		
-		if(found)
-			System.out.println("find key complete and key is " + start);
-		System.out.println(reduce(0, "(,|< (<pz$j|4<$4", 4));
 
 	}
+
+	public static boolean getPair(String start) {
+		String result = start;
+		for (int i = 0; i < chainSize; i++) {
+			result = reduce(0, hash.compact(result), 4);
+			// check the rainbow table to see if there is any collision
+			for (Pair<String, String> pair : LOP) {
+				if (pair.second.equals(result)) {
+					return false; // if collision, do nothing but return false
+				}
+			}
+		}
+
+		// if no collision, add the pair
+		LOP.add(new Pair<String, String>(start, result));
+		//System.out.println("chain create successful, start is " + start	+ " end is " + result);
+		return true;
+	}
+
+	public static boolean findArg(String start, String arg) {
+		// System.out.println("find arg entered" + start + arg);
+		boolean argfound = false;
+		// scan every hash in the chain for equal
+		for (int i = 0; i < chainSize; i++) {
+			if (hash.compact(start).equals(arg)) {
+				//System.out.println(hash.compact(start));
+				//System.out.println("start found to be " + start);
+				argfound = true;
+				break;
+			} else
+				start = reduce(0, hash.compact(start), 4);
+		}
+
+		if (argfound) {
+			System.out.println("Found key complete and key is " + start);
+		} else {
+			//System.out.println("Key not found");
+		}
+		return argfound;
+	}
+
 
 	public static String reduceReadable(byte[] bytes) {
 		for (int ii = 0; ii < bytes.length; ii++)
