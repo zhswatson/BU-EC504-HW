@@ -41,6 +41,7 @@ class hash {
 			System.err.println("Hash digest format not known!");
 			System.exit(-1);
 		}
+		//System.out.println(md.digest());
 		return makeReadable(md.digest());
 	}
 
@@ -79,8 +80,14 @@ class hash {
 	public static void main(String[] args) {
 		System.out.println(compact("5678"));
 		System.out.println(compact("123456"));
+		System.out.println(compact("ec504"));
+		System.out.println(compact("abcdef"));
+		System.out.println(compact("passwd"));
+		System.out.println(compact("admin"));
+		System.out.println(compact("c0De"));
 		
-		System.out.println(plain2("rx6|f.0 l8.hjt<:"));
+		System.out.println(plain2("pv~bz(j, $`z :vp"));
+/*		System.out.println(plain2("rx6|f.0 l8.hjt<:"));
 		System.out.println(plain2("4$x\".,xd\" <\"j 0j")); 
 		System.out.println(plain2(":&x`>``0$lln$:8<"));
 		System.out.println(plain2("*nb>8p$v.<jtvv0>"));
@@ -90,6 +97,7 @@ class hash {
 		System.out.println(plain2("4$n6nz&*6vt$bhv6"));
 		System.out.println(plain2("**$*0:b:j8b8f&l\""));
 		System.out.println(plain2("z,~~vb40`df&vhlp"));
+*/
 /*		System.out.println(plain("|:86(`l2>($:<8x0"));
 		System.out.println(plain("64*,>jh,(\"|:xxl("));
 		System.out.println(plain("`8(4(<<`|nr *,d4"));

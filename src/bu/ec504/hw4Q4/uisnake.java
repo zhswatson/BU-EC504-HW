@@ -36,7 +36,6 @@ public class uisnake {
 		static int boardSizeY;
 		static BufferedReader inFromUser;
 		static Socket clientSocket;
-		// Socket clientSocket = new Socket("192.168.1.118", 11000);
 		static DataOutputStream outToServer;
 		static BufferedReader inFromServer;
 		static String points;
@@ -131,7 +130,6 @@ public class uisnake {
 						return false;
 					}
 				}
-				System.out.println(m.length() + " l-x " + m.indexOf("\n"));
 				points = m.substring(8, m.length());
 			} else if (m.contains("UP")) {
 
@@ -161,7 +159,6 @@ public class uisnake {
 					JOptionPane.showMessageDialog(null, "GAME OVER!");
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			// for (int i = 0; i < boardSizeY + 2; i++) {
@@ -204,16 +201,15 @@ public class uisnake {
 			d = inFromServer.read(buf);
 			tmp = new String(buf);
 			tmp = tmp.substring(0,d);
-			if (d > 0) {
-				System.out.print(d + " ");
-				System.out.println("fetched: " + tmp);
-			}
+//			if (d > 0) {
+//				System.out.print(d + " ");
+//				System.out.println("fetched: " + tmp);
+//			}
 			return tmp;
 		}
 
 		public TCPClient() throws Exception {
 			super();
-			// TODO Auto-generated constructor stub
 			GAME = new String[100][100];
 			boardSizeX = 0;
 			boardSizeY = 0;
@@ -225,7 +221,7 @@ public class uisnake {
 					clientSocket.getInputStream()));
 			points = "0";
 			name = "EC504";
-			Timer t = new Timer(100, this);
+			Timer t = new Timer(80, this);
 			t.start();
 			addKeyListener(this);
 			setFocusable(true);
@@ -319,9 +315,8 @@ public class uisnake {
 		String s = (String) JOptionPane
 				.showInputDialog("Please enter your name!");
 		TCPClient tcpc = new TCPClient();
-		tcpc.fetch();
 		tcpc.setName(s);
-		tcpc.send(s);
+		TCPClient.send(s);
 		JFrame f = new JFrame();
 		f.add(tcpc);
 		f.setVisible(true);

@@ -28,7 +28,7 @@ public class BST {
                 case ZIG: result="ZIG"; break;
                 case ZAG: result="ZAG"; break;
             }
-            result+=" on " + myKey;
+            result+=" " + myKey;
             return result;
         }
         private Integer myKey;         // the key that is at the root of the rotation being performed
